@@ -1,12 +1,15 @@
 import React from 'react'
+import BackgroundImage from '../components/BackgroundImage.jsx';
+import Header from '../components/Header';
+
 
 const Signup = () => {
   return (
-    <div>Signup
-       page
-    </div>
-    
+    <>
+    <BackgroundImage/>
+    </>
   )
 }
+
 
 export default Signup;
