@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import { useDispatch } from "react-redux";
+import { getGenres } from "../store";
 
 export const Sriflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -8,6 +10,12 @@ export const Sriflix = () => {
     return () => (window.onscroll = null);
   };
 
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+
+    dispatch(getGenres())
+  },[])
 
   return(
     <div>
