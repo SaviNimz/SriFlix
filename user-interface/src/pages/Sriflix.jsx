@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { useDispatch } from "react-redux";
-import { getGenres } from "../store";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchMovies, getGenres } from "../store";
 
 export const Sriflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,11 +11,21 @@ export const Sriflix = () => {
   };
 
   const dispatch = useDispatch();
+  const movies = useSelector((state) => state.netflix.movies);
+  const genres = useSelector((state) => state.netflix.genres);
+  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
 
   useEffect(()=> {
 
     dispatch(getGenres())
   },[])
+
+  useEffect(() => {
+    if (genresLoaded) {
+      dispatch(fetchMovies({ genres, type: "all" }));
+    }
+  }, [genresLoaded]);
+
 
   return(
     <div>
