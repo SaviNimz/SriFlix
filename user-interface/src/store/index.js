@@ -85,33 +85,37 @@ const createArrayFromRawData = (array, moviesArray, genres) => {
 //   - Calls getRawData function with appropriate parameters based on specified genre and type.
 //   - Returns the fetched movie data.
   
-  export const fetchDataByGenre = createAsyncThunk(
-    "netflix/genre",
-    async ({ genre, type }, thunkAPI) => {
+// Function to fetch data by genre asynchronously
+export const fetchDataByGenre = createAsyncThunk(
+    "netflix/genre", // Action type string
+    async ({ genre, type }, thunkAPI) => { // Asynchronous function taking in genre, type, and thunkAPI
       const {
-        netflix: { genres },
-      } = thunkAPI.getState();
+        netflix: { genres }, // Destructuring genres from netflix slice of Redux state
+      } = thunkAPI.getState(); // Accessing Redux state using thunkAPI
+      // Fetching raw data using getRawData function with the appropriate API URL
       return getRawData(
         `https://api.themoviedb.org/3/discover/${type}?api_key=a105a7cd23a77e63b155b5a3c844c80f&with_genres=${genre}`,
-        genres
+        genres // Passing genres as a parameter
       );
     }
   );
-
-
+  
+  // Function to fetch trending movies asynchronously
   export const fetchMovies = createAsyncThunk(
-    "netflix/trending",
-    async ({ type }, thunkAPI) => {
+    "netflix/trending", // Action type string
+    async ({ type }, thunkAPI) => { // Asynchronous function taking in type and thunkAPI
       const {
-        netflix: { genres },
-      } = thunkAPI.getState();
+        netflix: { genres }, // Destructuring genres from netflix slice of Redux state
+      } = thunkAPI.getState(); // Accessing Redux state using thunkAPI
+      // Fetching raw data using getRawData function with the appropriate API URL
       return getRawData(
         `${TMDB_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`,
-        genres,
-        true
+        genres, // Passing genres as a parameter
+        true // Flag indicating this is for trending movies
       );
     }
   );
+  
   
 
   //provided code defines a Redux slice for managing Netflix-related state, including 
