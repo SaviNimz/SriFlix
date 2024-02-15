@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMovies, getGenres } from "../store";
+import Slider from "../components/Slider";
 
 export const Sriflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,6 +31,7 @@ export const Sriflix = () => {
   return(
     <div>
     <Navbar isScrolled={isScrolled} />
+    <Slider movies={movies} />
     </div>
   );
 }
