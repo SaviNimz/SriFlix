@@ -6,9 +6,12 @@ import styled from "styled-components";
 
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export const Sriflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
@@ -29,7 +32,7 @@ export const Sriflix = () => {
             <img src={MovieLogo} alt="Movie Logo" />
           </div>
           <div className="buttons flex">
-            <button
+          <button
               onClick={() => navigate("/player")}
               className="flex j-center a-center"
             >
