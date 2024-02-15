@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import backgroundImage from "../assets/home.jpg";
-import MovieLogo from "../assets/homeTitle.webp";
+import backgroundImage from "../assets/home1.jpg";
+import MovieLogo from "../assets/homeTitle.png";
 import styled from "styled-components";
 
 import { FaPlay } from "react-icons/fa";
