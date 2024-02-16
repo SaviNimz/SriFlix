@@ -1,71 +1,52 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import backgroundImage from "../assets/home.jpg";
-import MovieLogo from "../assets/homeTitle.webp";
+import backgroundImage from "../assets/home1.jpg";
+import MovieLogo from "../assets/homeTitle.png";
 import styled from "styled-components";
 
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchMovies, getGenres } from "../store";
-import Slider from "../components/Slider";
 
 export const Sriflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
   };
 
-  const dispatch = useDispatch();
-  const movies = useSelector((state) => state.netflix.movies);
-  const genres = useSelector((state) => state.netflix.genres);
-  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
-
-  useEffect(()=> {
-
-    dispatch(getGenres())
-  },[])
-
-  useEffect(() => {
-    if (genresLoaded) {
-      dispatch(fetchMovies({ genres, type: "all" }));
-    }
-  }, [genresLoaded]);
-
-
-  return(
+ 
+  return (
     <Container>
-    <Navbar isScrolled={isScrolled} />
-    <div className="hero">
-      <img
-        src={backgroundImage}
-        alt="background"
-        className="background-image"
-      />
-      <div className="container">
-        <div className="logo">
-          <img src={MovieLogo} alt="Movie Logo" />
-        </div>
-        <div className="buttons flex">
-        <button
-            onClick={() => navigate("/player")}
-            className="flex j-center a-center"
-          >
-            <FaPlay />
-            Play
-          </button>
-          <button className="flex j-center a-center">
-            <AiOutlineInfoCircle />
-            More Info
-          </button>
+      <Navbar isScrolled={isScrolled} />
+      <div className="hero">
+        <img
+          src={backgroundImage}
+          alt="background"
+          className="background-image"
+        />
+        <div className="container">
+          <div className="logo">
+            <img src={MovieLogo} alt="Movie Logo" />
+          </div>
+          <div className="buttons flex">
+          <button
+              onClick={() => navigate("/player")}
+              className="flex j-center a-center"
+            >
+              <FaPlay />
+              Play
+            </button>
+            <button className="flex j-center a-center">
+              <AiOutlineInfoCircle />
+              More Info
+            </button>
+          </div>
         </div>
       </div>
-     
-    </div>
-    <Slider movies={movies} />
-  </Container>
+    </Container>
   );
 }
 
