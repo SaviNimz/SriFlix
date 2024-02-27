@@ -84,7 +84,8 @@ const Container = styled.div`
           }
           button {
             padding: 0.5rem 1rem;
-            background-color: #e50914;
+            background-color: #6ee2f5;
+            
             border: none;
             cursor: pointer;
             color: white;
