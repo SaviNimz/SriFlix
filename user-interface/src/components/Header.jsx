@@ -13,6 +13,7 @@ export default function Header(props) {
       <button onClick={() => navigate(props.login ? "/login" : "/signup")}>
         {props.login ? "Log In" : "Sign In"}
       </button>
+      {/* test commit */}
     </StyledHeader>
   );
 }
