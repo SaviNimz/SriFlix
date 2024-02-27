@@ -40,9 +40,15 @@ This project is the SriFlix full stack website that mimics the functionality and
 
    ```bash
    git clone https://github.com/SaviNimz/SriFlix.git
+2. Navigate to the project directory:
 
+    ```bash
+    cd netflix-clone
+3. Install dependencies
 
+4. Start the frontend and backend servers using npm run dev
 
+5. Open your browser and navigate to http://localhost:5173/ to view the application.
 
 ## Usage
 - Register/Login using your email and password on the homepage.
