@@ -9,7 +9,7 @@ This is a full stack website project similar to Netflix, built using React, Redu
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
+- [Contributions](#contributions)
 
 
 ## Introduction
@@ -55,6 +55,6 @@ This project is the SriFlix full stack website that mimics the functionality and
 - Browse through the available titles and watch trailers by clicking on them.
 - Add/remove titles to/from your watchlist by clicking on the respective buttons.
 
-## Contributing
+## Contributions
 
 Contributions are welcome! If you find any bugs or have suggestions for improvement, feel free to open an issue or submit a pull request.
