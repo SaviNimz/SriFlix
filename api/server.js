@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://cheminimallikarachchi:123456sl@sriflixdb.bd53ncz.mongodb.net/?retryWrites=true&w=majority",
+mongoose.connect("mongodb+srv://cheminimallikarachchi:123456sl@sriflixdb.bd53ncz.mongodb.net/SriFlixDB",
 {
     useNewUrlParser: true,
     useUnifiedTopology: true,
