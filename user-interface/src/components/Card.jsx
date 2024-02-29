@@ -10,7 +10,7 @@ import axios from "axios";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useDispatch } from "react-redux";
-// import { removeMovieFromLiked } from "../store";
+import { removeMovieFromLiked } from "../store";
 import video from "../assets/video.mp4";
 
 export default React.memo(function Card({ index, movieData, isLiked = false }) {
