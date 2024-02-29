@@ -6,6 +6,7 @@ import Sriflix from './pages/Sriflix';
 import Player from './pages/Player';
 import Movies from './pages/Movies';
 import TVShows from './pages/TVShows';
+import UserListedMovies from './pages/UserListedMovies';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/player" element={<Player />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/tv" element={<TVShows />} />
+        <Route path="/mylist" element={<UserListedMovies />} />
       </Routes>
     </Router>
   );
