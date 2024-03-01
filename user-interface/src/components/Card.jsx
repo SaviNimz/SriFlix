@@ -12,6 +12,8 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { useDispatch } from "react-redux";
 import { removeMovieFromLiked } from "../store";
 import video from "../assets/video.mp4";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default React.memo(function Card({ index, movieData, isLiked = false }) {
   const navigate = useNavigate();
@@ -31,6 +33,16 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
         email,
         data: movieData,
       });
+      toast.success('Movie added to your list!');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFromList = async () => {
+    try {
+      await dispatch(removeMovieFromLiked({ movieId: movieData.id, email }));
+      toast.success('Movie removed from your list!');
     } catch (error) {
       console.log(error);
     }
@@ -41,6 +53,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      <ToastContainer />
       <img
         src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
         alt="card"
@@ -78,11 +91,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
                 {isLiked ? (
                   <BsCheck
                     title="Remove from List"
-                    onClick={() =>
-                      dispatch(
-                        removeMovieFromLiked({ movieId: movieData.id, email })
-                      )
-                    }
+                    onClick={removeFromList}
                   />
                 ) : (
                   <AiOutlinePlus title="Add to my list" onClick={addToList} />
@@ -95,7 +104,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
             <div className="genres flex">
               <ul className="flex">
                 {movieData.genres.map((genre) => (
-                  <li>{genre}</li>
+                  <li key={genre}>{genre}</li>
                 ))}
               </ul>
             </div>
@@ -182,3 +191,5 @@ const Container = styled.div`
     }
   }
 `;
+
+
