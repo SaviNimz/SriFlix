@@ -12,8 +12,7 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { useDispatch } from "react-redux";
 import { removeMovieFromLiked } from "../store";
 import video from "../assets/video.mp4";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'react-hot-toast';
 
 export default React.memo(function Card({ index, movieData, isLiked = false }) {
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
         email,
         data: movieData,
       });
-      toast.success('Movie added to your list!');
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +51,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <ToastContainer />
+      <Toaster />
       <img
         src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
         alt="card"
@@ -114,7 +112,6 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
     </Container>
   );
 });
-
 const Container = styled.div`
   max-width: 230px;
   width: 230px;
