@@ -32,6 +32,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
         email,
         data: movieData,
       });
+      toast.success('Movie added to your list!', { id: `addToList-${movieData.id}` });
     } catch (error) {
       console.log(error);
     }
