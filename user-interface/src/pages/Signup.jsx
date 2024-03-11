@@ -8,21 +8,33 @@ import styled from "styled-components";
 import BackgroundImage from "../components/BackgroundImage";
 import Header from "../components/Header";
 import { firebaseAuth } from "../utils/firebase-config";
+
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState(null); // State for handling errors
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
     try {
       const { email, password } = formValues;
+      if (!validateEmail(email)) {
+        setError("Please enter a valid email address.");
+        return;
+      }
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const validateEmail = (email) => {
+    // Regular expression for email validation
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
@@ -74,6 +86,7 @@ function Signup() {
             )}
           </div>
           {showPassword && <button onClick={handleSignIn}>Log In</button>}
+          {error && <ErrorMessage>{error}</ErrorMessage>} {/* Display error message */}
         </div>
       </div>
     </Container>
@@ -138,6 +151,11 @@ const Container = styled.div`
       }
     }
   }
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  margin-top: 5px;
 `;
 
 export default Signup;
