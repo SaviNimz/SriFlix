@@ -32,7 +32,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
         email,
         data: movieData,
       });
-      toast.success('Movie added to your list!', { id: `addToList-${movieData.id}` });
+
     } catch (error) {
       console.log(error);
     }
@@ -41,7 +41,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
   const removeFromList = async () => {
     try {
       await dispatch(removeMovieFromLiked({ movieId: movieData.id, email }));
-      toast.success('Movie removed from your list!');
+
     } catch (error) {
       console.log(error);
     }
