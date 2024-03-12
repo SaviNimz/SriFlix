@@ -12,6 +12,7 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { useDispatch } from "react-redux";
 import { removeMovieFromLiked } from "../store";
 import video from "../assets/video.mp4";
+import { Toaster, toast } from 'react-hot-toast';
 
 export default React.memo(function Card({ index, movieData, isLiked = false }) {
   const navigate = useNavigate();
@@ -31,6 +32,16 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
         email,
         data: movieData,
       });
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFromList = async () => {
+    try {
+      await dispatch(removeMovieFromLiked({ movieId: movieData.id, email }));
+
     } catch (error) {
       console.log(error);
     }
@@ -41,6 +52,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      <Toaster />
       <img
         src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
         alt="card"
@@ -78,11 +90,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
                 {isLiked ? (
                   <BsCheck
                     title="Remove from List"
-                    onClick={() =>
-                      dispatch(
-                        removeMovieFromLiked({ movieId: movieData.id, email })
-                      )
-                    }
+                    onClick={removeFromList}
                   />
                 ) : (
                   <AiOutlinePlus title="Add to my list" onClick={addToList} />
@@ -95,7 +103,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
             <div className="genres flex">
               <ul className="flex">
                 {movieData.genres.map((genre) => (
-                  <li>{genre}</li>
+                  <li key={genre}>{genre}</li>
                 ))}
               </ul>
             </div>
@@ -105,7 +113,6 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
     </Container>
   );
 });
-
 const Container = styled.div`
   max-width: 230px;
   width: 230px;
@@ -182,3 +189,5 @@ const Container = styled.div`
     }
   }
 `;
+
+

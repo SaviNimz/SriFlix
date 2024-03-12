@@ -15,7 +15,6 @@ export default function UserListedMovies() {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState(undefined);
-
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) setEmail(currentUser.email);
     else navigate("/login");
@@ -32,11 +31,17 @@ export default function UserListedMovies() {
     return () => (window.onscroll = null);
   };
 
+    // Filter movies based on their type
+  const moviesOfType = (type) => {
+      return movies.filter(movie => movie.type === type);
+  };
+
   return (
     <Container>
       <Navbar isScrolled={isScrolled} />
       <div className="content flex column">
-        <h1>My List</h1>
+        <h1>Your favourite Movies and TV series's  </h1>
+        
         <div className="grid flex">
           {movies && movies.length > 0 ? (
             movies.map((movie, index) => (
