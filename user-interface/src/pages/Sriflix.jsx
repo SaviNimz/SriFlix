@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import backgroundImage from "../assets/home1.jpg";
+import backgroundImage from "../assets/poster 2.jpg";
 import MovieLogo from "../assets/homeTitle.png";
 import styled from "styled-components";
 import { FaPlay } from "react-icons/fa";
@@ -39,9 +39,9 @@ export const Sriflix = () => {
       <div className="hero">
         <img src={backgroundImage} alt="background" className="background-image" />
         <div className="container">
-          <div className="logo">
+          {/* <div className="logo">
             <img src={MovieLogo} alt="Movie Logo" />
-          </div>
+          </div> */}
           <div className="buttons flex">
             <button onClick={() => navigate("/player")} className="flex j-center a-center">
               <FaPlay />
@@ -67,7 +67,7 @@ const Container = styled.div`
       filter: brightness(60%);
     }
     img {
-      height: 100vh;
+      height: 110vh;
       width: 100vw;
     }
     .container {
