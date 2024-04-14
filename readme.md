@@ -2,6 +2,8 @@
 
 This is a full stack website project similar to Netflix, built using React, Redux Toolkit, Firebase, Styled Components, Axios, Node.js, Express, and MongoDB.
 
+![image](https://github.com/SaviNimz/SriFlix/assets/108650897/5f8fcd9d-06db-4588-a97e-aaf673a4dc97)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -9,12 +11,13 @@ This is a full stack website project similar to Netflix, built using React, Redu
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Further Improvements ](#further-improvements ) 
 - [Contributions](#contributions)
 
 
 ## Introduction
 
-This project is the SriFlix full stack website that mimics the functionality and design of the popular streaming platform Netflix. It allows users to browse through a collection of movies and TV shows, watch trailers, and manage their watchlist.
+This project is the SriFlix full stack website that mimics the functionality and design of the popular streaming platform Netflix. Users can sign up and log in to their personalized accounts, where they can browse through a vast collection of movies and TV shows called by an API in real time. It allows users to browse through a collection of movies and TV shows and then manage their watchlist.
 
 ## Features
 
@@ -46,15 +49,24 @@ This project is the SriFlix full stack website that mimics the functionality and
     cd netflix-clone
 3. Install dependencies
 
-4. Start the frontend and backend servers using npm run dev
+4. Start the frontend server
+    ```bash
+    cd user-interface; npm run dev
 
-5. Open your browser and navigate to http://localhost:5173/ to view the application.
+6. Start the backend server
+    ```bash
+    cd api; yarn start
+
+8. Open your browser and navigate to http://localhost:5173/ to view the application.
 
 ## Usage
 - Register/Login using your email and password on the homepage.
 - Browse through the available titles and watch trailers by clicking on them.
 - Add/remove titles to/from your watchlist by clicking on the respective buttons.
 
+## Further Improvements
+- Recommendation system based off user activity
+  
 ## Contributions
 
 Contributions are welcome! If you find any bugs or have suggestions for improvement, feel free to open an issue or submit a pull request.
