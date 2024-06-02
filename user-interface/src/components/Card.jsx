@@ -15,35 +15,38 @@ import video from "../assets/video.mp4";
 import { Toaster, toast } from 'react-hot-toast';
 
 export default React.memo(function Card({ index, movieData, isLiked = false }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [isHovered, setIsHovered] = useState(false);
-  const [email, setEmail] = useState(undefined);
+  const navigate = useNavigate(); // Hook to navigate between routes
+  const dispatch = useDispatch(); // Hook to dispatch actions to the Redux store
+  const [isHovered, setIsHovered] = useState(false); // State to track hover status of the card
+  const [email, setEmail] = useState(undefined); // State to store the email of the authenticated user
 
+  // Set up an authentication state observer and get the current user's email
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) {
-      setEmail(currentUser.email);
-    } else navigate("/login");
+      setEmail(currentUser.email); // Set the email if the user is authenticated
+    } else {
+      navigate("/login"); // Navigate to the login page if the user is not authenticated
+    }
   });
 
+  // Function to add the movie to the user's list
   const addToList = async () => {
     try {
       await axios.post("http://localhost:5000/api/user/add", {
         email,
         data: movieData,
       });
-
     } catch (error) {
-      console.log(error);
+      console.log(error); // Log any errors
     }
   };
 
+  // Function to remove the movie from the user's list
   const removeFromList = async () => {
     try {
       await dispatch(removeMovieFromLiked({ movieId: movieData.id, email }));
-
     } catch (error) {
-      console.log(error);
+      console.log(error); // Log any errors
     }
   };
 
@@ -112,6 +115,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
       )}
     </Container>
   );
+
 });
 const Container = styled.div`
   max-width: 230px;
