@@ -5,9 +5,14 @@ import styled from "styled-components";
 import logo from "../assets/SriFlix.png";
 import { firebaseAuth } from "../utils/firebase-config";
 import { FaPowerOff, FaSearch } from "react-icons/fa";
+
 export default function Navbar({ isScrolled }) {
+  // State to manage the visibility of the search input
   const [showSearch, setShowSearch] = useState(false);
+  // State to manage if the search input is hovered
   const [inputHover, setInputHover] = useState(false);
+
+  // Navigation links for the navbar
   const links = [
     { name: "Home", link: "/" },
     { name: "TV Shows", link: "/tv" },
@@ -17,23 +22,24 @@ export default function Navbar({ isScrolled }) {
 
   return (
     <Container>
+      {/* Navbar with conditional class based on scroll state */}
       <nav className={`${isScrolled ? "scrolled" : ""} flex`}>
         <div className="left flex a-center">
           <div className="brand flex a-center j-center">
             <img src={logo} alt="Logo" />
           </div>
           <ul className="links flex">
-            {links.map(({ name, link }) => {
-              return (
-                <li key={name}>
-                  <Link to={link}>{name}</Link>
-                </li>
-              );
-            })}
+            {/* Mapping through links array to create list items */}
+            {links.map(({ name, link }) => (
+              <li key={name}>
+                <Link to={link}>{name}</Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="right flex a-center">
           <div className={`search ${showSearch ? "show-search" : ""}`}>
+            {/* Search button with focus and blur event handlers */}
             <button
               onFocus={() => setShowSearch(true)}
               onBlur={() => {
@@ -44,6 +50,7 @@ export default function Navbar({ isScrolled }) {
             >
               <FaSearch />
             </button>
+            {/* Search input with mouse enter, leave and blur event handlers */}
             <input
               type="text"
               placeholder="Search"
@@ -55,6 +62,7 @@ export default function Navbar({ isScrolled }) {
               }}
             />
           </div>
+          {/* Sign out button with click event handler */}
           <button onClick={() => signOut(firebaseAuth)}>
             <FaPowerOff />
           </button>
@@ -63,7 +71,6 @@ export default function Navbar({ isScrolled }) {
     </Container>
   );
 }
-
 const Container = styled.div`
   .scrolled {
     background-color: black;
