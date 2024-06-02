@@ -71,6 +71,7 @@ export default function Navbar({ isScrolled }) {
     </Container>
   );
 }
+
 const Container = styled.div`
   .scrolled {
     background-color: black;

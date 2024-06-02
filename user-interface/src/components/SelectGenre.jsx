@@ -2,28 +2,29 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { fetchDataByGenre } from "../store";
+
 export default function SelectGenre({ genres, type }) {
   const dispatch = useDispatch();
+
+  // Handle change event for the select element
+  const handleGenreChange = (e) => {
+    dispatch(
+      fetchDataByGenre({
+        genres,
+        genre: e.target.value,
+        type,
+      })
+    );
+  };
+
   return (
-    <Select
-      className="flex"
-      onChange={(e) => {
-        dispatch(
-          fetchDataByGenre({
-            genres,
-            genre: e.target.value,
-            type,
-          })
-        );
-      }}
-    >
-      {genres.map((genre) => {
-        return (
-          <option value={genre.id} key={genre.id}>
-            {genre.name}
-          </option>
-        );
-      })}
+    <Select className="flex" onChange={handleGenreChange}>
+      {/* Mapping through genres array to create option elements */}
+      {genres.map((genre) => (
+        <option value={genre.id} key={genre.id}>
+          {genre.name}
+        </option>
+      ))}
     </Select>
   );
 }
