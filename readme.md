@@ -2,7 +2,6 @@
 
 This is a full stack website project similar to Netflix, built using React, Redux Toolkit, Firebase, Styled Components, Axios, Node.js, Express, and MongoDB.
 
-![image](https://github.com/SaviNimz/SriFlix/assets/108650897/5f8fcd9d-06db-4588-a97e-aaf673a4dc97)
 
 ## Table of Contents
 
@@ -12,7 +11,7 @@ This is a full stack website project similar to Netflix, built using React, Redu
 - [Installation](#installation)
 - [Usage](#usage)
 - [Further Improvements ](#further-improvements ) 
-- [Contributions](#contributions)
+
 
 
 ## Introduction
@@ -67,6 +66,3 @@ This project is the SriFlix full stack website that mimics the functionality and
 ## Further Improvements
 - Recommendation system based off user activity
   
-## Contributions
-
-Contributions are welcome! If you find any bugs or have suggestions for improvement, feel free to open an issue or submit a pull request.
