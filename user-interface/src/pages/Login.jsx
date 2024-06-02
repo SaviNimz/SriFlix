@@ -1,104 +1,144 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import BackgroundImage from "../components/BackgroundImage";
 import Header from "../components/Header";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Effect to handle authentication state changes
+  useEffect(() => {
+    // Subscribe to authentication state changes
+    const unsubscribe = onAuthStateChanged(firebaseAuth, (currentUser) => {
+      
+      // Redirect if user is logged in
+      if (currentUser) navigate("/");
+    });
+    // Cleanup function to unsubscribe when component unmounts
+    return () => unsubscribe();
+  }, [navigate]);
+
+  // Function to handle login
   const handleLogin = async () => {
     try {
+      // Attempt to sign in with email and password
       await signInWithEmailAndPassword(firebaseAuth, email, password);
-    } catch (error) {
-      setError("Invalid credentials. Please try again."); // Set error message
-      console.log(error.code);
+      toast.success("Login successful!");
+    } catch (err) {
+      // Set error message if login fails
+      setError("Invalid credentials. Please try again.");
     }
   };
-
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) navigate("/");
-  });
 
   return (
     <Container>
       <BackgroundImage />
-      <div className="content">
+      <Content>
         <Header />
-        <div className="form-container flex column a-center j-center">
-          <div className="form flex column a-center j-center">
-            <div className="title">
+        <FormContainer>
+          <Form>
+            <Title>
               <h3>Login</h3>
-            </div>
-            <div className="container flex column">
-              <input
+            </Title>
+            <InputContainer>
+              {/* Input fields for email and password */}
+              <Input
                 type="text"
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
-              <input
+              <Input
                 type="password"
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
-              <button onClick={handleLogin}>Login to your account</button>
-              {error && <ErrorMessage>{error}</ErrorMessage>} {/* Render error message */}
-            </div>
-          </div>
-        </div>
-      </div>
+              {/* Login button */}
+              <LoginButton onClick={handleLogin}>
+                Login to your account
+              </LoginButton>
+              {/* Display error message if login fails */}
+              {error && <ErrorMessage>{error}</ErrorMessage>}
+            </InputContainer>
+          </Form>
+        </FormContainer>
+      </Content>
+      <ToastContainer />
     </Container>
   );
-}
+};
 
+// Styled components for layout and styling
 const Container = styled.div`
   position: relative;
-  .content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(0, 0, 0, 0.5);
-    grid-template-rows: 15vh 85vh;
-    .form-container {
-      gap: 2rem;
-      height: 85vh;
-      .form {
-        padding: 2rem;
-        background-color: #000000b0;
-        width: 25vw;
-        gap: 2rem;
-        color: white;
-        .container {
-          gap: 2rem;
-          input {
-            padding: 0.5rem 1rem;
-            width: 15rem;
-          }
-          button {
-            padding: 0.5rem 1rem;
-            background-color: #6ee2f5;
-            
-            border: none;
-            cursor: pointer;
-            color: white;
-            border-radius: 0.2rem;
-            font-weight: bolder;
-            font-size: 1.05rem;
-          }
-        }
-      }
-    }
+`;
+
+const Content = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: grid;
+  grid-template-rows: 15vh 85vh;
+`;
+
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  height: 85vh;
+`;
+
+const Form = styled.div`
+  padding: 2rem;
+  background-color: #000000b0;
+  width: 25vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  color: white;
+`;
+
+const Title = styled.div`
+  h3 {
+    margin: 0;
   }
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+const Input = styled.input`
+  padding: 0.5rem 1rem;
+  width: 15rem;
+`;
+
+const LoginButton = styled.button`
+  padding: 0.5rem 1rem;
+  background-color: #6ee2f5;
+  border: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 0.2rem;
+  font-weight: bolder;
+  font-size: 1.05rem;
 `;
 
 const ErrorMessage = styled.p`
