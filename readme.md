@@ -50,12 +50,12 @@ This project is the SriFlix full stack website that mimics the functionality and
 
 4. Start the frontend server
     ```bash
-    cd user-interface; npm run dev
-
+    cd user-interface 
+    npm run dev
 6. Start the backend server
     ```bash
-    cd api; yarn start
-
+    cd api
+    yarn start
 8. Open your browser and navigate to http://localhost:5173/ to view the application.
 
 ## Usage
