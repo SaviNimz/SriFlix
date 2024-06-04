@@ -36,7 +36,7 @@ function TVShows() {
     }
   }, [genresLoaded]); // Only fetch movies when genres are loaded
 
-  // handle user authentication with f
+  // handle user authentication with firebase
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) setUser(currentUser.uid);
     else navigate("/login");
