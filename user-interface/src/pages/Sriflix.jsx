@@ -1,53 +1,61 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import backgroundImage from "../assets/poster 2.jpg";
-import MovieLogo from "../assets/homeTitle.png";
 import styled from "styled-components";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMovies, getGenres } from "../store";
+import Navbar from "../components/Navbar";
 import Slider from "../components/Slider";
+import backgroundImage from "../assets/poster 2.jpg";
 
-export const Sriflix = () => {
+const Sriflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const navigate = useNavigate(); // Define navigate using useNavigate
-  window.onscroll = () => {
-    setIsScrolled(window.pageYOffset === 0 ? false : true);
-    return () => (window.onscroll = null);
-  };
-
+  const navigate = useNavigate(); 
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
 
+  // Set scroll event to manage the navbar style based on the scroll position
   useEffect(() => {
-    dispatch(getGenres());
+    const handleScroll = () => {
+      setIsScrolled(window.pageYOffset !== 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Fetch genres on component mount
+  useEffect(() => {
+    dispatch(getGenres());
+  }, [dispatch]);
+
+  // Fetch movies once genres are loaded
   useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: "all" }));
     }
-  }, [genresLoaded]);
+  }, [genresLoaded, genres, dispatch]);
+
+  // Navigate to the player page when the Play button is clicked
+  const handlePlayClick = () => {
+    navigate("/player");
+  };
 
   return (
     <Container>
       <Navbar isScrolled={isScrolled} />
       <div className="hero">
         <img src={backgroundImage} alt="background" className="background-image" />
-        <div className="container">
-          {/* <div className="logo">
-            <img src={MovieLogo} alt="Movie Logo" />
-          </div> */}
-          <div className="buttons flex">
-            <button onClick={() => navigate("/player")} className="flex j-center a-center">
+        <div className="content">
+          <div className="buttons">
+            <button onClick={handlePlayClick} className="button">
               <FaPlay />
               Play
             </button>
-            <button className="flex j-center a-center">
+            <button className="button">
               <AiOutlineInfoCircle />
               More Info
             </button>
@@ -59,42 +67,39 @@ export const Sriflix = () => {
   );
 };
 
+// Styled components for consistent styling
 const Container = styled.div`
   background-color: black;
   .hero {
     position: relative;
     .background-image {
       filter: brightness(60%);
-    }
-    img {
-      height: 110vh;
       width: 100vw;
+      height: 110vh;
     }
-    .container {
+    .content {
       position: absolute;
       bottom: 5rem;
-      .logo {
-        img {
-          width: 100%;
-          height: 100%;
-          margin-left: 5rem;
-        }
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 5rem;
       .buttons {
-        margin: 5rem;
+        display: flex;
         gap: 2rem;
-        button {
+        .button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-size: 1.4rem;
           gap: 1rem;
           border-radius: 0.2rem;
-          padding: 0.5rem;
-          padding-left: 2rem;
-          padding-right: 2.4rem;
+          padding: 0.5rem 2rem;
           border: none;
           cursor: pointer;
-          transition: 0.2s ease-in-out;
+          transition: opacity 0.2s ease-in-out;
           &:hover {
-            opacity: 0.8;npm run dev
+            opacity: 0.8;
           }
           &:nth-of-type(2) {
             background-color: rgba(109, 109, 110, 0.7);
