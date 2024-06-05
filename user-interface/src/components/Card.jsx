@@ -12,7 +12,6 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { useDispatch } from "react-redux";
 import { removeMovieFromLiked } from "../store";
 import video from "../assets/video.mp4";
-import { Toaster, toast } from 'react-hot-toast';
 
 export default React.memo(function Card({ index, movieData, isLiked = false }) {
   const navigate = useNavigate(); // Hook to navigate between routes
@@ -55,7 +54,6 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Toaster />
       <img
         src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
         alt="card"
