@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { getUsersLikedMovies } from "../store";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 export default function UserListedMovies() {
   // Redux hooks to access dispatch function and state
@@ -16,7 +17,7 @@ export default function UserListedMovies() {
   // useNavigate hook to navigate programmatically
   const navigate = useNavigate();
 
-  // Local state for managing scroll status and user email
+  // Local state for managing scroll status, user email, and backend status
   const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState(undefined);
 
@@ -50,10 +51,34 @@ export default function UserListedMovies() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Helper function to filter movies based on their type (optional, can be used later)
-  const moviesOfType = (type) => {
-    return movies.filter((movie) => movie.type === type);
+  // Check if backend is online
+  const checkBackendStatus = async () => {
+    try {
+      await axios.get("http://localhost:5000/status");
+      return true;
+    } catch (error) {
+      return false;
+    }
   };
+
+  // Function to render movies
+  const renderMovies = () => {
+    const backendStatus = checkBackendStatus();
+    if (backendStatus) {
+      return movies && movies.length > 0 ? (
+        movies.map((movie, index) => (
+          <Card
+            movieData={movie}
+            index={index}
+            key={movie.id}
+            isLiked={true}
+          />
+        ))
+      ) : null; // Return null if no movies found
+    } else {
+      return <p>Backend offline</p>;
+    }
+  }
 
   return (
     <Container>
@@ -61,18 +86,7 @@ export default function UserListedMovies() {
       <div className="content flex column">
         <h1>Your Favourite Movies and TV Series</h1>
         <div className="grid flex">
-          {movies && movies.length > 0 ? (
-            movies.map((movie, index) => (
-              <Card
-                movieData={movie}
-                index={index}
-                key={movie.id}
-                isLiked={true}
-              />
-            ))
-          ) : (
-            <p>No movies found</p>
-          )}
+          {renderMovies()}
         </div>
       </div>
     </Container>
