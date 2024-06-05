@@ -3,17 +3,18 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/SriFlix.png";
 
+// Define and export the Header component
 export default function Header(props) {
-  const navigate = useNavigate();
-  return (
+  const navigate = useNavigate(); // Hook to get the navigate function for navigation
+  return ( 
     <StyledHeader className="flex a-center j-between">
       <div className="logo">
         <img src={logo} alt="logo" />
       </div>
+      {/* Navigate to login or signup page based on the login prop */}
       <button onClick={() => navigate(props.login ? "/login" : "/signup")}>
         {props.login ? "Log In" : "Sign In"}
       </button>
-      {/* test commit */}
     </StyledHeader>
   );
 }

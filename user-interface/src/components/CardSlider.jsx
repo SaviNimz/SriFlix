@@ -2,19 +2,30 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Card from "./Card";
+
+// Export a memoized CardSlider component
 export default React.memo(function CardSlider({ data, title }) {
-  const listRef = useRef();
-  const [sliderPosition, setSliderPosition] = useState(0);
-  const [showControls, setShowControls] = useState(false);
+  const listRef = useRef(); // Create a ref to access the slider DOM element
+  const [sliderPosition, setSliderPosition] = useState(0); // State to keep track of the slider's position
+  const [showControls, setShowControls] = useState(false); // State to show/hide navigation controls
+
+  // Function to handle the direction of the slider
   const handleDirection = (direction) => {
+    // Calculate the distance to move based on the current position of the slider
     let distance = listRef.current.getBoundingClientRect().x - 70;
+    
+    // If direction is left and the slider is not at the beginning
     if (direction === "left" && sliderPosition > 0) {
+      // Move the slider to the right
       listRef.current.style.transform = `translateX(${230 + distance}px)`;
-      setSliderPosition(sliderPosition - 1);
+      setSliderPosition(sliderPosition - 1); // Update the slider position state
     }
+    
+    // If direction is right and the slider is not at the end
     if (direction === "right" && sliderPosition < 4) {
+      // Move the slider to the left
       listRef.current.style.transform = `translateX(${-230 + distance}px)`;
-      setSliderPosition(sliderPosition + 1);
+      setSliderPosition(sliderPosition + 1); // Update the slider position state
     }
   };
 
@@ -22,8 +33,8 @@ export default React.memo(function CardSlider({ data, title }) {
     <Container
       className="flex column"
       showControls={showControls}
-      onMouseEnter={() => setShowControls(true)}
-      onMouseLeave={() => setShowControls(false)}
+      onMouseEnter={() => setShowControls(true)} // Show controls on mouse enter
+      onMouseLeave={() => setShowControls(false)} // Hide controls on mouse leave
     >
       <h1>{title}</h1>
       <div className="wrapper">
@@ -36,7 +47,7 @@ export default React.memo(function CardSlider({ data, title }) {
         </div>
         <div className="slider flex" ref={listRef}>
           {data.map((movie, index) => {
-            return <Card movieData={movie} index={index} key={movie.id} />;
+            return <Card movieData={movie} index={index} key={movie.id} />; // Render each item as a Card component
           })}
         </div>
         <div
@@ -50,6 +61,7 @@ export default React.memo(function CardSlider({ data, title }) {
     </Container>
   );
 });
+
 const Container = styled.div`
   gap: 1rem;
   position: relative;

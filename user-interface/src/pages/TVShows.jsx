@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import CardSlider from "../components/CardSlider";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
@@ -11,32 +10,39 @@ import SelectGenre from "../components/SelectGenre";
 import Slider from "../components/Slider";
 
 function TVShows() {
+
+  // State for user authentication
+  const [user, setUser] = useState(undefined);
+  // State for scroll detection (optional)
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // Redux state selectors 
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
-  const dataLoading = useSelector((state) => state.netflix.dataLoading);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Fetch genres on component mount
   useEffect(() => {
     if (!genres.length) dispatch(getGenres());
   }, []);
 
+  // Fetch TV shows on genres loaded
   useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: "tv" }));
     }
-  }, [genresLoaded]);
+  }, [genresLoaded]); // Only fetch movies when genres are loaded
 
-  const [user, setUser] = useState(undefined);
-
+  // handle user authentication with firebase
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) setUser(currentUser.uid);
     else navigate("/login");
   });
 
+  // Handle scroll detection (optional)
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);

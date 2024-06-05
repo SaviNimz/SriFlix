@@ -1,8 +1,5 @@
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BackgroundImage from "../components/BackgroundImage";
@@ -10,7 +7,7 @@ import Header from "../components/Header";
 import { firebaseAuth } from "../utils/firebase-config";
 
 function Signup() {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password field visibility
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -18,6 +15,15 @@ function Signup() {
   const [error, setError] = useState(null); // State for handling errors
   const navigate = useNavigate();
 
+  // Effect to monitor authentication state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) navigate("/");
+    });
+    return () => unsubscribe(); // Clean up the listener on component unmount
+  }, [navigate]);
+
+  // Function to handle sign-in
   const handleSignIn = async () => {
     try {
       const { email, password } = formValues;
@@ -28,18 +34,24 @@ function Signup() {
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
     } catch (error) {
       console.log(error);
+      setError("Failed to create an account. Please try again.");
     }
   };
 
+  // Function to validate email format
   const validateEmail = (email) => {
-    // Regular expression for email validation
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) navigate("/");
-  });
+  // Function to handle input field changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
 
   return (
     <Container showPassword={showPassword}>
@@ -58,12 +70,7 @@ function Signup() {
             <input
               type="email"
               placeholder="Email address"
-              onChange={(e) =>
-                setFormValues({
-                  ...formValues,
-                  [e.target.name]: e.target.value,
-                })
-              }
+              onChange={handleInputChange}
               name="email"
               value={formValues.email}
             />
@@ -71,12 +78,7 @@ function Signup() {
               <input
                 type="password"
                 placeholder="Password"
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.name]: e.target.value,
-                  })
-                }
+                onChange={handleInputChange}
                 name="password"
                 value={formValues.password}
               />
@@ -93,6 +95,7 @@ function Signup() {
   );
 }
 
+// Styled-components for styling
 const Container = styled.div`
   position: relative;
   .content {
