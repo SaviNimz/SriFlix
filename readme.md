@@ -61,7 +61,7 @@ This project is the SriFlix full stack website that mimics the functionality and
 ## Usage
 - Register/Login using your email and password on the homepage.
 - Browse through the available titles and watch trailers by clicking on them.
-- Add/remove titles to/from your watchlist by clicking on the respective buttons.
+- Add/remove titles to/from your watch list by clicking on the respective buttons.
 
 ## Further Improvements
 - Recommendation system based off user activity
